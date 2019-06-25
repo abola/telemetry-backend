@@ -19,7 +19,6 @@ public class BackendExample {
 
     Logger log = LogManager.getLogger(BackendExample.class);
 
-
     /**
      * 回傳品項ID、品項名稱與報價
      * @return json
@@ -27,6 +26,7 @@ public class BackendExample {
      */
     @GetMapping(path="/get/listQuote")
     public String getListQuote() throws Exception{
+        log.info("/get/listQuote request Success.");
         return yamlToJson(
                 readFromInputStream(getClass().getClassLoader().getResourceAsStream("listQuote.yaml")));
     }
@@ -39,6 +39,7 @@ public class BackendExample {
      */
     @GetMapping(path="/get/inStock/{item}")
     public String getInStock(@PathVariable("item") String item) throws Exception{
+        log.info("/get/inStock/{item} request Success.");
         // 隨機回傳
         return "{\"inStock\": "+ Double.toString(Math.random()*10).substring(0,1) +"}";
     }

@@ -1,12 +1,9 @@
-- item:
-  uniqueId: 6be83ec8-cd23-4509-bd40-95b00c4aa6ee
+- uniqueId: 6be83ec8-cd23-4509-bd40-95b00c4aa6ee
   name: iPhone XR
   price: 25800
-- item:
-  uniqueId: fbbb81c4-9ed7-426e-9a10-8c6d53433b26
+- uniqueId: fbbb81c4-9ed7-426e-9a10-8c6d53433b26
   name: iPhone X
   price: 25800
-- item:
-  uniqueId: e84b2ed8-8862-441b-8fbd-219c00233735
+- uniqueId: e84b2ed8-8862-441b-8fbd-219c00233735
   name: iPhone XS
   price: 25800
