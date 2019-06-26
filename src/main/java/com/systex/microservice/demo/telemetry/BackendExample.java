@@ -41,7 +41,7 @@ public class BackendExample {
     public String getInStock(@PathVariable("item") String item) throws Exception{
         log.info("/get/inStock/{item} request Success.");
         // 隨機回傳
-        return "{\"inStock\": "+ Double.toString(Math.random()*10).substring(0,1) +"}";
+        return Double.toString(Math.random()*10).substring(0,1);
     }
 
     private String readFromInputStream(InputStream inputStream)
