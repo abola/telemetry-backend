@@ -17,7 +17,7 @@ pipeline {
       steps{
         checkout scm
         script {
-          if ( params.imageTag != '') {
+          if ( params.imageTag?.trim()) {
             IMG_TAG = "${params.imageTag}"
           }
         }
@@ -26,6 +26,11 @@ pipeline {
     
     stage('build') {
       steps{
+        script {
+          if ( params.imageTag?.trim()) {
+            IMG_TAG = "${params.imageTag}"
+          }
+        }
         sh "mvn -Dmaven.test.skip=true package && docker build -t gcr.io/${params.googleProjectId}/${params.imageName}:${env.IMG_TAG} ."
       }
     }
