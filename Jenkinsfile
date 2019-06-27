@@ -9,42 +9,43 @@ pipeline {
   }
 
   environment {
-    IMG_TAG = "${env.BUILD_NUMBER}"
+    IMG_TAG = (params.imageTag?.trim())?"${env.BUILD_NUMBER}":"123"
   }
 
   stages {
     stage('init') {
       steps{
         checkout scm
-        script {
-          if ( params.imageTag?.trim()) {
-            IMG_TAG = "${params.imageTag}"
-          }
-        }
+        #script {
+        #  if ( params.imageTag?.trim()) {
+        #    IMG_TAG = "${params.imageTag}"
+        #  }
+        #}
       }
     }
     
     stage('build') {
       steps{
-        script {
-          if ( params.imageTag?.trim()) {
-            IMG_TAG = "${params.imageTag}"
-          }
-        }
-        sh "mvn -Dmaven.test.skip=true package && docker build -t gcr.io/${params.googleProjectId}/${params.imageName}:${env.IMG_TAG} ."
+        #script {
+        #  if ( params.imageTag?.trim()) {
+        #    IMG_TAG = "${params.imageTag}"
+        #  }
+        #}
+        sh "echo ${env.IMG_TAG}"
+        #sh "mvn -Dmaven.test.skip=true package && docker build -t gcr.io/${params.googleProjectId}/${params.imageName}:${env.IMG_TAG} ."
       }
     }
         
-    stage('push') {
-      steps{
-        sh "docker push gcr.io/${params.googleProjectId}/${params.imageName}:${env.IMG_TAG}"
-      }
-    }
+    #stage('push') {
+    #  steps{
+    #    sh "docker push gcr.io/${params.googleProjectId}/${params.imageName}:${env.IMG_TAG}"
+    #  }
+    #}
 
-    stage('deploy'){
-      steps{
-        sh "INGRESS_HOST=\$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.status.loadBalancer.ingress[0].ip}') && helm template kubernetes/ --set google.project.id=${params.googleProjectId} --set project.imageName=${params.imageName} --set project.imageTag=${env.IMG_TAG} --set google.project.ingressgatewayIp=\$INGRESS_HOST | kubectl apply -f - "
-      }
-    }
+    #stage('deploy'){
+    #  steps{
+    #    sh "INGRESS_HOST=\$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.status.loadBalancer.ingress[0].ip}') && helm template kubernetes/ --set google.project.id=${params.googleProjectId} --set project.imageName=${params.imageName} --set project.imageTag=${env.IMG_TAG} --set google.project.ingressgatewayIp=\$INGRESS_HOST | kubectl apply -f - "
+    #  }
+    #}
   }
 }
