@@ -9,7 +9,7 @@ pipeline {
   }
 
   environment {
-    IMG_TAG = (params.imageTag?.trim())?"${env.BUILD_NUMBER}":"123"
+    IMG_TAG = (${params.imageTag}?.trim() == true)?"${env.BUILD_NUMBER}":"123"
   }
 
   stages {
