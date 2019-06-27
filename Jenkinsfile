@@ -9,7 +9,7 @@ pipeline {
   }
 
   environment {
-    IMG_TAG = env.BUILD_NUMBER
+    IMG_TAG = "${env.BUILD_NUMBER}"
   }
 
   stages {
@@ -17,8 +17,8 @@ pipeline {
       steps{
         checkout scm
         script {
-          if (params.imageTag != '') {
-            IMG_TAG = params.imageTag
+          if ( params.imageTag != '') {
+            IMG_TAG = "${params.imageTag}"
           }
         }
       }
