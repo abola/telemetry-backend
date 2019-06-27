@@ -26,7 +26,7 @@ public class BackendExample {
      */
     @GetMapping(path="/get/listQuote")
     public String getListQuote() throws Exception{
-        log.info("/get/listQuote request Success.");
+        log.info("{\"action\":\"/get/listQuote\",\"msg\":\"Function called.\"}");
         return yamlToJson(
                 readFromInputStream(getClass().getClassLoader().getResourceAsStream("listQuote.yaml")));
     }
@@ -39,9 +39,28 @@ public class BackendExample {
      */
     @GetMapping(path="/get/inStock/{item}")
     public String getInStock(@PathVariable("item") String item) throws Exception{
-        log.info("/get/inStock/{item} request Success.");
+        log.info("{\"action\":\"/get/inStock/{item}\",\"msg\":\"Function called.\"}");
         // 隨機回傳
         return Double.toString(Math.random()*10).substring(0,1);
+    }
+
+    /**
+     * 模擬資料庫連線發生異常
+     * @return json
+     * @throws Exception
+     */
+    @GetMapping(path="/get/dbConnection")
+    public String getDbConnection() throws Exception{
+        log.info("{\"action\":\"/get/getDbConnection\",\"msg\":\"Function called.\"}");
+
+        Thread.sleep(100);
+        log.info("{\"action\":\"/get/getDbConnection\",\"msg\":\"Connect to DB\"}");
+
+        if (true){
+            throw new Exception("模擬異常中斷");
+        }
+
+        return "{}";
     }
 
     private String readFromInputStream(InputStream inputStream)
